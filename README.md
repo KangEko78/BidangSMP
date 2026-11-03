@@ -1,43 +1,50 @@
-﻿# Helpdesk TKA SMP Banyuwangi
+# Helpdesk TKA SMP Banyuwangi
 
-Aplikasi Vercel statis + Serverless Functions dengan Google Apps Script sebagai jembatan ke spreadsheet.
+Portal Next.js untuk informasi TKA, simulasi sesi/client, laporan pelaksanaan/gangguan, dashboard grafik, dan forum diskusi. **Google Sheets tetap menjadi penyimpanan data** melalui Google Apps Script; istilah yang tampil pada antarmuka web dibuat umum sebagai “database”.
 
-## Data yang dipakai
+## Koneksi yang digunakan
 
-- Spreadsheet ID: `1wk4JYy2qlwkAsItke_v7e5BUQ9ac4xpgkn4K86xfDYc`
-- Tab otomatis: `Laporan SMP` dan `Diskusi SMP`
-- Browser memanggil `/api/health`, `/api/laporan`, dan `/api/diskusi`. Kunci Google Sheets disimpan sebagai environment variable di Vercel dan Script Properties Apps Script, tidak diletakkan di HTML.
-- Dashboard hanya menerima kolom ringkas. Uraian laporan, tindakan, dan kontak petugas tidak dikirim dalam respons dashboard.
-- Logo Tut Wuri Handayani menjadi aset lokal agar tidak bergantung pada hotlink gambar pihak ketiga. Grafik dashboard dibuat dengan SVG dari data laporan yang dibaca dari Sheets.
+- `GOOGLE_APPS_SCRIPT_URL` = URL Web App Apps Script yang berakhiran `/exec`.
+- `SHEET_API_KEY` = secret yang sama dengan Script Property `SHEET_API_KEY` di Apps Script.
+- `SHEET_ID` tetap tersimpan di Script Properties Apps Script. Nilai ini tidak perlu dipasang di Vercel.
+- Fungsi Apps Script yang dipanggil: `health`, `listReports`, `createReport`, `listDiscussions`, dan `createDiscussion`.
 
-## 1. Siapkan Google Apps Script
+Pastikan Apps Script sudah dideploy sebagai **Web app**, menjalankan `setupSheets()` agar tab `Laporan SMP` dan `Diskusi SMP` tersedia, dan URL `/exec` dapat diakses. Jika kode Apps Script berubah, deploy versi baru. Jangan menaruh API key di HTML atau repository.
 
-1. Buka [script.google.com](https://script.google.com/) dengan akun yang memiliki akses edit ke spreadsheet di atas, lalu buat project.
-2. Salin `gas/Code.gs` ke editor.
-3. Di **Project Settings → Script Properties**, tambahkan:
-   - `SHEET_ID` = `1wk4JYy2qlwkAsItke_v7e5BUQ9ac4xpgkn4K86xfDYc`
-   - `SHEET_API_KEY` = secret acak kuat (minimal 32 byte). Buat satu secret, simpan aman, lalu gunakan nilai yang sama di Vercel.
-4. Pilih fungsi `setupSheets` lalu **Run** dan setujui akses spreadsheet. Fungsi ini membuat header di tab `Laporan SMP` dan `Diskusi SMP`.
-5. **Deploy → New deployment → Web app**. Jalankan sebagai akun Anda. Pilih akses yang memungkinkan Vercel memanggil endpoint (biasanya *Anyone*); operasi tetap diperiksa dengan `SHEET_API_KEY`.
-6. Salin URL Web App berakhiran `/exec`.
+## GitHub → Vercel
 
-Jika deployment sudah dibuat sebelumnya, setelah mengubah kode pilih **Deploy → Manage deployments → Edit → New version → Deploy**. Membuka URL `/exec` di browser menjalankan pemeriksaan `doGet`; kiriman data dari Vercel memakai `doPost`.
+- Tambahkan dua environment variable di Vercel: `GOOGLE_APPS_SCRIPT_URL` dan `SHEET_API_KEY`.
+- Pilih environment **Production**; aktifkan juga Preview jika ingin mencoba deployment pratinjau.
+- Jika isi folder ini menjadi root repository GitHub, biarkan **Root Directory** Vercel kosong.
+- Jika seluruh folder `outputs` disimpan sebagai root repository, set **Root Directory** ke `outputs/bidang-smp-next`.
+- Framework preset: **Next.js**. Gunakan build command dan output default Next.js.
+- Setelah menyimpan environment variable, lakukan deployment baru.
+- Periksa `https://<domain>/api/health`. Respons `ok: true` menunjukkan Vercel, Apps Script, dan tab Google Sheets tersambung.
 
-Jangan kirim atau commit nilai secret. Batasi akses edit spreadsheet hanya ke petugas yang berwenang.
+## Menjalankan lokal
 
-## 2. Pasang di Vercel
+Gunakan Node.js 20.9 atau lebih baru. Salin `.env.example` menjadi `.env.local`, isi URL `/exec` dan secret yang sama, lalu jalankan:
 
-Deploy folder ini sebagai project Vercel (framework **Other**, root folder `bidang-smp-app`). Atur environment variables untuk **Production**, **Preview**, dan **Development**:
+```bash
+npm install
+npm run dev
+```
 
-- `GOOGLE_APPS_SCRIPT_URL` = URL `/exec` dari deployment Apps Script
-- `SHEET_API_KEY` = secret yang sama dengan Script Property
+Buka `http://localhost:3000`.
 
-Contoh lokal: salin `.env.example` menjadi `.env.local`, isi dua nilai itu, lalu jalankan `vercel dev` dari folder aplikasi. Jangan memasukkan nilai secret ke file HTML atau repository.
+## Fitur yang dipertahankan
 
-Setelah variabel disimpan, redeploy agar fungsi memakai konfigurasi baru. Buka `/api/health`; respons `ok: true` menandakan Vercel dapat menjangkau Apps Script dan tab spreadsheet siap. Bila gagal, pesan menunjukkan apakah environment Vercel, Script Properties, izin spreadsheet, atau deployment Apps Script yang perlu diperiksa. Buka `/api/laporan` dan `/api/diskusi` untuk uji baca. Kemudian kirim satu laporan uji tanpa data pribadi dan pastikan baris baru muncul di tab `Laporan SMP`.
+- Navigasi Beranda, Informasi TKA, Simulasi sesi, Laporan, Dashboard, dan Diskusi.
+- Simulasi pembagian mode CBT dan rata, hasil cetak, validasi laporan, unduhan CSV, grafik laporan, pembuatan topik, dan tanggapan.
+- Dashboard publik hanya menampilkan tanggal, sekolah, jenis, dampak, dan status. Detail kejadian, tindakan, dan kontak tetap tidak ditampilkan pada ringkasan dashboard.
+- Struktur data konten tersedia di `lib/content.ts`; laporan dan diskusi tidak diisi data contoh palsu.
 
-## Catatan privasi dan akses
+## Struktur
 
-Endpoint laporan menerima kiriman dari browser publik. Dashboard publik hanya menampilkan tanggal, sekolah, jenis, dampak, dan status. Uraian kejadian dan kontak petugas disimpan di spreadsheet dan tidak disajikan pada endpoint dashboard. Sebelum mempublikasikan, aktifkan kontrol akses yang sesuai bagi lingkungan sekolah, moderasi diskusi, dan prosedur retensi/penghapusan data. Jangan masukkan nama/NISN murid, kata sandi, token, atau isi soal.
-
-Google Apps Script dan spreadsheet harus berada di akun yang sama atau akun tersebut harus diberi akses. Koneksi live belum aktif sampai Apps Script dideploy dan kedua environment variable Vercel diisi.
+```text
+app/          Next.js App Router, UI, dan API routes
+components/   Ikon dan kursor interaktif
+hooks/        Animasi GSAP dan ScrollTrigger
+lib/          Konten dan koneksi Apps Script
+public/       Aset Tut Wuri Handayani
+```
