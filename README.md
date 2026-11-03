@@ -6,8 +6,9 @@ Aplikasi Vercel statis + Serverless Functions dengan Google Apps Script sebagai 
 
 - Spreadsheet ID: `1wk4JYy2qlwkAsItke_v7e5BUQ9ac4xpgkn4K86xfDYc`
 - Tab otomatis: `Laporan SMP` dan `Diskusi SMP`
-- Browser hanya memanggil `/api/laporan` dan `/api/diskusi`. Kunci Google Sheets disimpan sebagai environment variable di Vercel dan Script Properties Apps Script, tidak diletakkan di HTML.
+- Browser memanggil `/api/health`, `/api/laporan`, dan `/api/diskusi`. Kunci Google Sheets disimpan sebagai environment variable di Vercel dan Script Properties Apps Script, tidak diletakkan di HTML.
 - Dashboard hanya menerima kolom ringkas. Uraian laporan, tindakan, dan kontak petugas tidak dikirim dalam respons dashboard.
+- Logo Tut Wuri Handayani menjadi aset lokal agar tidak bergantung pada hotlink gambar pihak ketiga. Grafik dashboard dibuat dengan SVG dari data laporan yang dibaca dari Sheets.
 
 ## 1. Siapkan Google Apps Script
 
@@ -33,7 +34,7 @@ Deploy folder ini sebagai project Vercel (framework **Other**, root folder `bida
 
 Contoh lokal: salin `.env.example` menjadi `.env.local`, isi dua nilai itu, lalu jalankan `vercel dev` dari folder aplikasi. Jangan memasukkan nilai secret ke file HTML atau repository.
 
-Setelah variabel disimpan, redeploy agar fungsi memakai konfigurasi baru. Buka `/api/laporan` dan `/api/diskusi`; respons `ok: true` menandakan koneksi server ke Apps Script berhasil. Kemudian kirim satu laporan uji yang tidak berisi data pribadi dan pastikan baris baru muncul di tab `Laporan SMP`.
+Setelah variabel disimpan, redeploy agar fungsi memakai konfigurasi baru. Buka `/api/health`; respons `ok: true` menandakan Vercel dapat menjangkau Apps Script dan tab spreadsheet siap. Bila gagal, pesan menunjukkan apakah environment Vercel, Script Properties, izin spreadsheet, atau deployment Apps Script yang perlu diperiksa. Buka `/api/laporan` dan `/api/diskusi` untuk uji baca. Kemudian kirim satu laporan uji tanpa data pribadi dan pastikan baris baru muncul di tab `Laporan SMP`.
 
 ## Catatan privasi dan akses
 

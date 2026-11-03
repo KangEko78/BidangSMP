@@ -10,12 +10,26 @@ const DISCUSSION_HEADERS = ['id','createdAt','topic','title','message','author']
 // Data operations still require POST + the shared API key in doPost().
 function doGet() {
   const props = PropertiesService.getScriptProperties();
-  const configured = Boolean(props.getProperty('SHEET_ID') && props.getProperty('SHEET_API_KEY'));
+  const sheetId = props.getProperty('SHEET_ID');
+  const configured = Boolean(sheetId && props.getProperty('SHEET_API_KEY'));
+  let spreadsheetAccessible = false;
+  let tabsReady = false;
+  if (configured) {
+    try {
+      const ss = SpreadsheetApp.openById(sheetId);
+      spreadsheetAccessible = true;
+      tabsReady = Boolean(ss.getSheetByName('Laporan SMP') && ss.getSheetByName('Diskusi SMP'));
+    } catch (err) {
+      spreadsheetAccessible = false;
+    }
+  }
   return json_({
     ok: true,
     service: 'Helpdesk TKA SMP Banyuwangi Sheets API',
     configured: configured,
-    message: configured ? 'Web App aktif. Gunakan endpoint POST dari Vercel untuk operasi data.' : 'Web App aktif, tetapi Script Properties belum lengkap.'
+    spreadsheetAccessible: spreadsheetAccessible,
+    tabsReady: tabsReady,
+    message: !configured ? 'Script Properties belum lengkap.' : !spreadsheetAccessible ? 'Apps Script belum dapat membuka spreadsheet.' : !tabsReady ? 'Tab layanan belum dibuat.' : 'Web App dan Google Sheets siap.'
   });
 }
 
