@@ -5,6 +5,7 @@ import type { FormEvent } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { MagneticCursor } from "@/components/cursor";
+import { AppearanceClock } from "@/components/appearance-clock";
 import { useCinematicMotion } from "@/hooks/useCinematicMotion";
 import { impacts, informationCards, navigation, officialSources, phases, reportTypes, sanctionCards, ServiceView, Report, Discussion } from "@/lib/content";
 
@@ -165,7 +166,10 @@ export default function PortalPage() {
       <section className="workspace">
         <header className="topbar glass-panel">
           <div className="breadcrumbs"><span>PORTAL LAYANAN</span><i>/</i><b>{titles[view]}</b></div>
-          <div className={`connection-pill ${online === true ? "is-online" : online === false ? "is-offline" : ""}`}><i />{online === true ? "Database tersambung" : online === false ? "Database belum siap" : "Memeriksa koneksi"}</div>
+          <div className="topbar-tools">
+            <div className={`connection-pill ${online === true ? "is-online" : online === false ? "is-offline" : ""}`}><i />{online === true ? "Database tersambung" : online === false ? "Database belum siap" : "Memeriksa koneksi"}</div>
+            <AppearanceClock />
+          </div>
         </header>
 
         <div className="view-content" key={view}>
@@ -261,3 +265,4 @@ function BarChart({ items, gold = false }: { items: { name: string; count: numbe
   const max = Math.max(1, ...items.map((item) => item.count));
   return <div className="bar-list">{items.map((item) => <div className="bar-row" key={item.name}><span>{item.name}</span><div className="bar-track"><i className={gold ? "bar-fill gold-fill" : "bar-fill"} style={{ width: `${item.count ? Math.max(4, item.count / max * 100) : 0}%` }} /></div><b>{item.count}</b></div>)}</div>;
 }
+

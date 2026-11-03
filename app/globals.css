@@ -19,3 +19,105 @@
 @media(max-width:380px){.mobile-nav{left:6px;right:6px;bottom:6px;padding:5px}.mobile-nav button{min-height:45px}.mobile-nav button span{font-size:6px}.story-hero{padding-left:18px;padding-right:18px}.hero-bottom{left:18px;right:18px}.story-title{font-size:41px}.hero-seal{right:16px}.sanction-grid{grid-template-columns:1fr}.sanction-card{min-height:0}.sim-aside{grid-template-columns:1fr}.sim-aside>.eyebrow,.formula{grid-column:auto}.flow-step{display:flex}.result-metrics{grid-template-columns:1fr}.result-metrics>div{display:flex;justify-content:space-between;align-items:center}.result-metrics b{margin:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.grain{animation:none}}
 @media print{.sidebar,.topbar,.mobile-nav,.grain,.magnetic-cursor,.app-footer,.form-actions{display:none!important}.app-shell{display:block;padding:0;background:white;color:#111}.workspace,.content-section{padding:0}.result-panel,.form-panel,.table-scroll{break-inside:avoid;border:1px solid #aaa;background:white;color:#111}.story-hero{display:none}}
+
+
+/* Theme and time controls */
+.topbar-tools{display:flex;align-items:center;gap:10px;min-width:0}
+.clock-widget{display:flex;align-items:center;gap:9px;min-width:0;padding:4px 11px 4px 5px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)}
+.analog-clock{width:38px;height:38px;flex:none}
+.analog-clock svg{display:block;width:100%;height:100%;overflow:visible}
+.clock-ring{fill:rgba(128,224,192,.035);stroke:rgba(128,224,192,.35);stroke-width:1}
+.clock-ticks{fill:none;stroke:rgba(128,224,192,.55);stroke-width:1.5;stroke-linecap:round}
+.clock-hand{stroke-linecap:round;transform-origin:24px 24px}
+.hour-hand{stroke:var(--ink);stroke-width:2.5}
+.minute-hand{stroke:var(--mint);stroke-width:1.8}
+.second-hand{stroke:#d5a65a;stroke-width:1}
+.clock-pin{fill:var(--mint)}
+.clock-copy{display:grid;gap:2px;min-width:0}
+.clock-copy b{font-size:11px;font-variant-numeric:tabular-nums;letter-spacing:.04em;white-space:nowrap}
+.clock-copy b span{color:var(--muted);font-size:8px;letter-spacing:.1em}
+.clock-copy small{max-width:144px;overflow:hidden;color:var(--muted);font-size:8px;text-overflow:ellipsis;white-space:nowrap}
+.theme-toggle{min-height:39px;padding:0 11px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.035);color:var(--ink);font-size:9px;font-weight:750;transition:background .2s,border-color .2s,transform .2s}
+.theme-toggle:hover{border-color:rgba(128,224,192,.45);background:rgba(128,224,192,.09);transform:translateY(-1px)}
+.theme-toggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--mint)}
+html[data-theme="light"]{color-scheme:light;--ink:#203239;--muted:#64767c;--dim:#7c8b90;--line:rgba(44,73,80,.14);--panel:rgba(255,255,255,.88);--panel-solid:#fff;--black:#f2f6f5;--mint:#167a60;--mint-dark:#14644f;--gold:#986b24}
+html[data-theme="light"],html[data-theme="light"] body{background:#f2f6f5;color:#203239}
+html[data-theme="light"] .app-shell{background:radial-gradient(ellipse at 18% 0%,rgba(108,180,152,.09),transparent 34%),#f2f6f5}
+html[data-theme="light"] .glass-panel{background:rgba(255,255,255,.86);border-color:rgba(44,73,80,.12);box-shadow:0 10px 34px rgba(37,62,66,.055)}
+html[data-theme="light"] .sidebar{background:rgba(255,255,255,.92)}
+html[data-theme="light"] .brand b,html[data-theme="light"] .sidebar-bottom b{color:#243a40}
+html[data-theme="light"] .nav-item{color:#66777c}
+html[data-theme="light"] .nav-item:hover{background:#f2f7f5;color:#25423d}
+html[data-theme="light"] .nav-item.active{color:#176a54;background:linear-gradient(100deg,rgba(43,151,116,.12),rgba(43,151,116,.035));border-color:rgba(43,151,116,.2)}
+html[data-theme="light"] .nav-item.active .nav-index{color:#55917e}
+html[data-theme="light"] .breadcrumbs b{color:#243a40}
+html[data-theme="light"] .breadcrumbs{color:#718187}
+html[data-theme="light"] .connection-pill{color:#617278;background:rgba(255,255,255,.62);border-color:rgba(44,73,80,.12)}
+html[data-theme="light"] .connection-pill.is-online{color:#23775f}
+html[data-theme="light"] .view-content{color:var(--ink)}
+html[data-theme="light"] .home-overview,html[data-theme="light"] .content-section{color:var(--ink)}
+html[data-theme="light"] .section-heading>p,html[data-theme="light"] .page-intro>p:last-child{color:#65777d}
+html[data-theme="light"] .quick-card,html[data-theme="light"] .editorial-card,html[data-theme="light"] .sanction-card,html[data-theme="light"] .metric-card,html[data-theme="light"] .chart-panel,html[data-theme="light"] .table-panel,html[data-theme="light"] .form-panel,html[data-theme="light"] .result-panel{background:linear-gradient(145deg,#fff,#f9fbfa);border-color:rgba(44,73,80,.13);box-shadow:0 10px 30px rgba(37,62,66,.055)}
+html[data-theme="light"] .quick-card>b,html[data-theme="light"] .editorial-card h3,html[data-theme="light"] .sanction-card h3,html[data-theme="light"] .panel-heading h2,html[data-theme="light"] .panel-heading h3,html[data-theme="light"] .metric-card>b,html[data-theme="light"] .donut-graphic b,html[data-theme="light"] .forum-heading h2{color:#22383e}
+html[data-theme="light"] .quick-card:hover,html[data-theme="light"] .editorial-card:hover,html[data-theme="light"] .sanction-card:hover{background:#fff;border-color:rgba(36,142,108,.3)}
+html[data-theme="light"] .quick-description,html[data-theme="light"] .editorial-card p:last-child,html[data-theme="light"] .sanction-card p{color:#687a7f}
+html[data-theme="light"] .quick-number,html[data-theme="light"] .card-index,html[data-theme="light"] .panel-number{color:#829196}
+html[data-theme="light"] .home-database,html[data-theme="light"] .source-list,html[data-theme="light"] .topic-index{background:rgba(255,255,255,.7);border-color:rgba(44,73,80,.13)}
+html[data-theme="light"] .home-database b{color:#243a40}
+html[data-theme="light"] .home-database p,html[data-theme="light"] .source-list>a,html[data-theme="light"] .topic-row{color:#607379}
+html[data-theme="light"] .home-database>button{color:#397e68;background:#fff}
+html[data-theme="light"] .notice-card{background:#fff8e9;border-color:#ead8aa}
+html[data-theme="light"] .notice-card b{color:#765713}
+html[data-theme="light"] .notice-card p{color:#786b50}
+html[data-theme="light"] .notice-card.success{background:#edf8f2;border-color:#c6e6d5}
+html[data-theme="light"] .notice-card.success b{color:#22694f}
+html[data-theme="light"] .notice-card.success p{color:#547a67}
+html[data-theme="light"] .danger-note{background:#fff4f0;border-color:#d88b75}
+html[data-theme="light"] .danger-note b{color:#9e4e3e}
+html[data-theme="light"] .danger-note span{color:#795e58}
+html[data-theme="light"] .section-note,html[data-theme="light"] .table-footnote{color:#6b7b80}
+html[data-theme="light"] .field,html[data-theme="light"] .field>span{color:#52666c}
+html[data-theme="light"] .field input,html[data-theme="light"] .field select,html[data-theme="light"] .field textarea,html[data-theme="light"] .reply-composer input,html[data-theme="light"] .reply-composer textarea{background:#fff;color:#233a40;border-color:rgba(44,73,80,.18)}
+html[data-theme="light"] .field input::placeholder,html[data-theme="light"] .field textarea::placeholder,html[data-theme="light"] .reply-composer input::placeholder,html[data-theme="light"] .reply-composer textarea::placeholder{color:#94a1a4}
+html[data-theme="light"] .field input:focus,html[data-theme="light"] .field select:focus,html[data-theme="light"] .field textarea:focus,html[data-theme="light"] .reply-composer input:focus,html[data-theme="light"] .reply-composer textarea:focus{background:#fff}
+html[data-theme="light"] .sim-aside{background:radial-gradient(ellipse at 95% 5%,rgba(90,175,140,.1),transparent 50%),#f8fbf9;border-color:rgba(43,151,116,.18)}
+html[data-theme="light"] .sim-aside,html[data-theme="light"] .sim-aside .formula{color:#617379}
+html[data-theme="light"] .sim-aside .flow-step{color:#5d7176}
+html[data-theme="light"] .sim-aside .formula b{color:#28443f}
+html[data-theme="light"] .result-metrics>div{background:#f5f9f7;border-color:rgba(44,73,80,.12)}
+html[data-theme="light"] .result-metrics span{color:#65777c}
+html[data-theme="light"] .table-scroll{border-color:rgba(44,73,80,.13)}
+html[data-theme="light"] th{background:#f1f6f4;color:#5c7177}
+html[data-theme="light"] td{color:#52666b;border-color:rgba(44,73,80,.11)}
+html[data-theme="light"] tbody tr:hover{background:#eef7f2}
+html[data-theme="light"] .metric-top{color:#66797d}
+html[data-theme="light"] .metric-top i{background:#eef8f3}
+html[data-theme="light"] .chart-legend,html[data-theme="light"] .trend-chart text{fill:#61757b;color:#61757b}
+html[data-theme="light"] .trend-value{fill:#40585c!important}
+html[data-theme="light"] .trend-point{fill:#fff}
+html[data-theme="light"] .donut-graphic>div{background:#fff}
+html[data-theme="light"] .donut-legend span{color:#5f7378}
+html[data-theme="light"] .donut-legend b{color:#344c50}
+html[data-theme="light"] .bar-track{background:#e2eae7}
+html[data-theme="light"] .bar-row,html[data-theme="light"] .bar-row>b{color:#52686d}
+html[data-theme="light"] .impact-tag,html[data-theme="light"] .status-tag{color:#51656a;border-color:rgba(44,73,80,.16)}
+html[data-theme="light"] .forum-main{background:rgba(255,255,255,.88);border-color:rgba(44,73,80,.14)}
+html[data-theme="light"] .post-card{background:#fbfdfc;border-color:rgba(44,73,80,.12)}
+html[data-theme="light"] .post-meta b,html[data-theme="light"] .post-card h3{color:#30484d}
+html[data-theme="light"] .post-card p{color:#5c7176}
+html[data-theme="light"] .post-meta time,html[data-theme="light"] .post-count,html[data-theme="light"] .empty-forum>p{color:#78898e}
+html[data-theme="light"] .empty-forum>b{color:#334b50}
+html[data-theme="light"] .topic-pill{color:#24755c}
+html[data-theme="light"] .empty-chat{color:#24755c}
+html[data-theme="light"] .button-outline{color:#365259;background:#fff;border-color:rgba(44,73,80,.16)}
+html[data-theme="light"] .button-quiet{color:#476168}
+html[data-theme="light"] .app-footer{color:#75858a}
+html[data-theme="light"] .clock-widget,html[data-theme="light"] .theme-toggle{background:rgba(255,255,255,.8);border-color:rgba(44,73,80,.15);color:#334a4e}
+html[data-theme="light"] .clock-ring{fill:rgba(43,151,116,.06);stroke:rgba(43,151,116,.36)}
+html[data-theme="light"] .clock-ticks{stroke:rgba(43,151,116,.55)}
+html[data-theme="light"] .hour-hand{stroke:#2c4247}
+html[data-theme="light"] .second-hand{stroke:#a8772d}
+@media(max-width:900px){.topbar-tools{gap:6px}.clock-widget{gap:6px;padding-right:8px}.analog-clock{width:34px;height:34px}}
+@media(max-width:650px){.topbar{gap:6px}.topbar-tools{gap:5px}.connection-pill{font-size:0;padding:8px}.connection-pill i{width:7px;height:7px}.clock-widget{padding:3px 7px 3px 3px}.analog-clock{width:30px;height:30px}.clock-copy b{font-size:10px}.clock-copy b span,.clock-copy small{display:none}.theme-toggle{min-height:36px;padding:0 8px;gap:4px}.theme-toggle span{font-size:8px}.breadcrumbs{flex:1;min-width:0;white-space:nowrap}.breadcrumbs span{display:none}}
+@media(max-width:380px){.topbar-tools{gap:4px}.clock-widget{gap:4px}.analog-clock{width:27px;height:27px}.theme-toggle{padding:0 6px}.theme-toggle span{display:none}}
+
